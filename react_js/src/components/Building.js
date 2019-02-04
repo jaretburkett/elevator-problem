@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import elevatorStates from '../methods/elevatorStates'
 import {splitState} from '../methods/elevatorMethods'
 import brick from '../assets/img/brick.jpg'
@@ -25,11 +25,12 @@ class FloorBlock extends Component {
         }
         const blockSize = 100 / this.props.numBlocks;
         const style = {
-            width:`${blockSize}%`,
-            float:'left'
+            width: `${blockSize}%`,
+            float: 'left',
+            border: this.props.isActive ? '2px solid red' : 0
         };
         return (
-            <img src={img} style={style}/>
+            <img src={img} atl="" style={style}/>
         )
     }
 }
@@ -41,10 +42,14 @@ class Floor extends Component {
         console.log('floorStateArr', floorStateArr);
         const numBlocks = floorStateArr.length;
         const floorBlocks = floorStateArr.map((blockState, index) =>
-            <FloorBlock blockState={blockState} numBlocks={numBlocks} key={index}/>
+            <FloorBlock blockState={blockState}
+                        isActive={this.props.activeStep === blockState}
+                        numBlocks={numBlocks}
+                        key={index}
+            />
         );
         return (
-            <div className="floor clearfix" style={{borderBottom:'5px solid #44474b'}}>
+            <div className="floor clearfix" style={{borderBottom: '5px solid #44474b'}}>
                 {floorBlocks}
             </div>
         )
@@ -62,15 +67,43 @@ class Building extends Component {
     }
 
     render() {
-        const currentState = splitState(elevatorStates, this.state.time);
-        const floors = currentState.map((floorState, index) =>
-            <Floor floorState={floorState} key={index}/>
-        );
+        let buildings = [];
+        const {solution} = this.props.store;
+        if (solution !== null && !(solution.includes('NO SUCCESSFUL ROUTE'))) {
+            const steps = solution.split('');
+            for (let s = 0; s < steps.length; s++) {
+                const step = steps[s];
+                const currentState = splitState(elevatorStates, s);
+                const floors = currentState.map((floorState, index) =>
+                    <Floor floorState={floorState} activeStep={step} key={index}/>
+                );
+                buildings.push(
+                    <div style={{ marginBottom:10 }}>
+                        <div className="text-center" style={{
+                            background: '#44474b',
+                            color: '#fff',
+                        }}>
+                            T = {s + 1}
+                        </div>
+                        {floors}
+                    </div>
+                )
+            }
+        } else {
+            buildings = null;
+        }
         return (
-            <div>
-                <div style={{background:'#44474b', height:20}}></div>
-                {floors}
-            </div>
+            <Fragment>
+                {
+                    solution !== null ?
+                        <p className="lead">
+                            {solution}
+                        </p>
+                        :
+                        null
+                }
+                {buildings}
+            </Fragment>
         );
     }
 }

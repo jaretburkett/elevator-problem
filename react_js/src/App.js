@@ -19,24 +19,13 @@ class App extends Component {
                 <div className="row">
                     <div className="col-md-4 order-md-2 mb-4">
                         <h4 className="d-flex justify-content-between align-items-center mb-3">
-                            <span className="text-muted">Building</span>
+                            <span className="text-muted">Solution</span>
                         </h4>
                         <Building {...this.props}/>
                     </div>
                     <div className="col-md-8 order-md-1">
                         <h4 className="mb-3">Elevator Options</h4>
                         <Form {...this.props}/>
-                        {
-                            solution !== null ?
-                            <Fragment>
-                                <h4 className="mb-3">Solution</h4>
-                                <p className="lead">
-                                    {solution}
-                                </p>
-                            </Fragment>
-                            :
-                            null
-                        }
                     </div>
                 </div>
                 <Footer {...this.props}/>
