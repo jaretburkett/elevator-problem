@@ -1,0 +1,14 @@
+{
+  "short_name": "Elevator Problem",
+  "name": "Elevator Problem - Jaret Burkett",
+  "icons": [
+    {
+      "src": "cropped-ReStream-Site-Icon-192x192.png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
