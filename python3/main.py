@@ -45,14 +45,18 @@ def find_elevator_path(elevator_states, starting_elevator, final_destination):
                 current_elevator = paths[p][-1]
                 current_floor = states[current_elevator][t]
                 elevators_on_floor = [c for c in states.columns if states[c][t] == current_floor]
+                # if there are other possible steps,
+                # create a new possible path by cloning current path and adding new step
                 for new_path_idx in range(1, len(elevators_on_floor)):
                     new_path = copy(paths[p]) + [elevators_on_floor[new_path_idx]]
                     paths.append(new_path)
                 paths[p] += [elevators_on_floor[0]]
+        # return first path that arrives at our destination, if there is one.
         for path in paths:
             final_floor = int(states[path[-1]][time])
             if final_floor == floor:
                 return ''.join(path)
+        # if we made it this far, there is not a solution
         return fail_string
 
 

@@ -77,12 +77,15 @@ export function findElevatorPath(elevatorStates, startingElevator, finalDestinat
         // # pre-populate the paths list with all elevators on the same floor as out starting elevator at t=1
         let paths = [states[0].floors[start_floor]];
         for(let t = 1; t < time + 1; t++){
-            const pathSnapshot = paths.slice(0);
-            for(let p = 0; p < pathSnapshot.length; p++){
+            // separate out the paths.length call so it is not reevaluated each iteration
+            const numPaths = paths.length;
+            for(let p = 0; p < numPaths; p++){
                 let current_elevator = paths[p][paths[p].length - 1];
                 let current_floor = states[t].elevators[current_elevator];
                 let elevators_on_floor = states[t].floors[current_floor];
+                // check if there are other possible steps
                 if(elevators_on_floor.length > 1) {
+                    // create a new possible path by cloning current path and adding new step
                     for (let new_path_idx = 1; new_path_idx < elevators_on_floor.length; new_path_idx++) {
                         let new_path = paths[p].slice(0);
                         new_path.push(elevators_on_floor[new_path_idx]);
@@ -92,6 +95,7 @@ export function findElevatorPath(elevatorStates, startingElevator, finalDestinat
                 paths[p].push(elevators_on_floor[0]);
             }
         }
+        // return first path that arrives at our destination, if there is one.
         for(let p = 0; p < paths.length; p++){
             const currentPath = paths[p];
             const final_floor = states[time].elevators[currentPath[currentPath.length - 1]];
@@ -99,7 +103,7 @@ export function findElevatorPath(elevatorStates, startingElevator, finalDestinat
                 return currentPath.join('');
             }
         }
-        // if we made it this far, there is no possible path
+        // if we made it this far, there is not a solution
         return noRouteString;
     }
 }

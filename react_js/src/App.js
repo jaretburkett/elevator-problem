@@ -7,7 +7,6 @@ import Form from "./components/Form";
 
 class App extends Component {
     render() {
-        const {solution} = this.props.store;
         return (
             <Fragment>
                 <div className="py-5 text-center">
