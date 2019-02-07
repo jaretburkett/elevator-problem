@@ -4,7 +4,7 @@
 Included are two examples of solving the elevator problem:
 
 #### Python 3
-Located in the `./python3` folder. This solution is a cli only solution and
+Located in the [python3](elevator-problem/tree/master/python3) folder. This solution is a cli only solution and
 includes a unit test to validate the output. The only dependencies are pandas
 and numpy.
 
@@ -14,12 +14,16 @@ python3 python3/main.py
 ```
 
 #### React.js
-Located in the `./react_js` folder. I had some time over the weekend, 
+
+The react version is deployed here: [https://jaretburkett.github.io/elevator-problem/](https://jaretburkett.github.io/elevator-problem/)
+
+Located in the [react_js](elevator-problem/tree/master/react_js) folder. I had some time over the weekend, 
 so I decided to throw together 
 a quick React solution. For obvious reasons, it is a much larger
 project which is mostly boiler plate and code for the GUI. 
 The "meat" of the solution can be found in 
-`./react_js/methods/elevatorMethods.js`. Tests are currently not
+[react_js/methods/elevatorMethods.js](elevator-problem/blob/master/react_js/src/methods/elevatorMethods.js). 
+Tests are currently not
 included in this example, but I would be happy to add them if
 desired. The solution is similar to the python version, but requires some extra
 work since we do not have the benefit of numpy and pandas. 
